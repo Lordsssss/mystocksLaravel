@@ -1,5 +1,5 @@
 @extends('layouts.app') <!-- Assuming you have a layout file -->
-
+@include('navbar', ['appName' => 'Hugo Montreuil'])
 @section('content')
     <section id="stocks">
         <h1 class="title">Stock Prices</h1>
