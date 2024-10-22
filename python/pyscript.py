@@ -5,6 +5,7 @@ import json
 import websocket
 import os
 from dotenv import load_dotenv
+from ratelimit import limits, sleep_and_retry
 load_dotenv()
 # Initialize the connection as None
 connection = None
@@ -26,6 +27,7 @@ def get_connection():
             connection = None
     return connection
 
+@limits(calls=15, period=2)
 def update_stock_price(symbol, price):
     try:
         conn = get_connection()
@@ -87,7 +89,6 @@ def on_open(ws):
         ws.send(json.dumps({"type": "subscribe", "symbol": symbol}))
 
 if __name__ == "__main__":
-    print(os.environ.get("PYTHON_STOCK_API"))
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp(os.environ.get("PYTHON_STOCK_API"),
                               on_message=on_message,

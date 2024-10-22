@@ -1,0 +1,4 @@
+mysql-connector-python==8.0.34
+websocket-client==1.6.2
+python-dotenv==1.0.0
+ratelimit==2.2.1
