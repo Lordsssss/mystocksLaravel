@@ -38,11 +38,13 @@ Route::get('email/verify', [VerificationController::class, 'show'])->name('verif
 Route::post('email/verification-notification', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 
+Route::get('/stocks/{id}', [StockController::class, 'show'])->middleware('auth')->name('stocks.show');
 Route::resource('stocks', StockController::class);
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Auth::routes();
 

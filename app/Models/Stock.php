@@ -36,7 +36,7 @@ class Stock extends Model
      *
      * @var array
      */
-    protected $fillable = ['stock_symbol', 'stock_name', 'current_price', 'updated_at', 'deleted'];
+    protected $fillable = ['stock_symbol', 'stock_name', 'current_price', 'updated_at'];
 
     /**
      * The attributes that should be cast to native types.
@@ -46,6 +46,5 @@ class Stock extends Model
     protected $casts = [
         'current_price' => 'decimal:2',
         'updated_at' => 'datetime',
-        'deleted' => 'boolean',
     ];
 }

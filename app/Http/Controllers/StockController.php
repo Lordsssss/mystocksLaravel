@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stock;
+use App\Models\StockPrices;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -34,8 +35,13 @@ class StockController extends Controller
 
     public function show($id)
     {
-        $stock = Stock::findOrFail($id); // Fetch stock by ID
-        return view('stocks.show', compact('stock')); // Pass stock to the view
+        $stock = Stock::findOrFail($id); // Get the stock by ID
+        // Fetch price history for the stock
+        $priceHistory = StockPrices::where('stock_symbol', $stock->stock_symbol)
+            ->orderBy('price_date', 'asc')
+            ->get();
+    
+        return view('stocks.show', compact('stock', 'priceHistory')); // Pass both stock and price history data to the view
     }
 
     public function edit($id)
@@ -66,4 +72,6 @@ class StockController extends Controller
 
         return redirect()->route('stocks.index')->with('success', 'Stock deleted successfully.'); // Redirect with success message
     }
+
+    
 }

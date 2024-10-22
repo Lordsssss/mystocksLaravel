@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @include('navbar', ['appName' => 'Hugo Montreuil'])
-<main>
-    <section>
+<div class="container m-3">
+    <section >
         <h2>Introduction</h2>
         <p>Welcome to My Stocks App! This application helps you manage and track your stock investments with ease.
         </p>
@@ -18,5 +18,5 @@
         <h2>Contact Us</h2>
         <p>If you have any questions or feedback, feel free to <a href="/contact">contact us</a>.</p>
     </section>
-</main>
+</div>
 
