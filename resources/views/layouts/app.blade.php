@@ -22,11 +22,12 @@
 </style>
 
 <body>
-
-    <div class="container">
+    @include('navbar', ['appName' => 'Hugo Montreuil'])
+    <div class="container my-4">
         @yield('content') {{-- Where specific page content will be injected --}}
     </div>
     @livewireScripts
+    @include('footer', ['appName' => 'Hugo Montreuil'])
 </body>
 
 </html>

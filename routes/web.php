@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AccountController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,7 @@ use App\Http\Controllers\AccountController;
 |
 */
 
+// Authentication Routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 
@@ -35,28 +37,31 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
+// Email Verification Routes
 Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::post('email/verification-notification', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
 
+// Stock Routes
 Route::get('/stocks/{id}', [StockController::class, 'show'])->middleware('auth')->name('stocks.show');
 Route::resource('stocks', StockController::class);
 
+// News Routes
 Route::get('/news', [NewsController::class, 'index'])->name('news')->middleware('auth');
 
-
-
-
+// Account Routes
 Route::middleware('auth')->group(function () {
     Route::get('/account', [AccountController::class, 'edit'])->name('account'); // Account edit form
     Route::put('/account', [AccountController::class, 'update'])->name('account.update'); // Account update action
 });
 
+// Homepage Route
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Authentication Routes
+Auth::routes(['verify' => true]);
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Home Route (after login)
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');

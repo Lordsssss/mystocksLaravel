@@ -1,6 +1,4 @@
 @extends('layouts.app')
-@include('navbar', ['appName' => 'Hugo Montreuil'])
-
 @section('content')
 <div class="container mt-5">
     <h1 class="mb-4">Update Profile</h1>
@@ -21,7 +19,8 @@
 
         <div class="mb-3">
             <label for="profile_image" class="form-label">Profile Image URL</label>
-            <input type="text" class="form-control" id="profile_image" name="profile_image" placeholder="Enter image URL">
+            <input type="text" class="form-control" id="profile_image" name="profile_image"
+                placeholder="Enter image URL">
             <small class="form-text text-muted">Please provide a direct link to your profile image.</small>
         </div>
 
