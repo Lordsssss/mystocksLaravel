@@ -8,7 +8,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
-
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\AccountController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +41,16 @@ Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify']
 
 Route::get('/stocks/{id}', [StockController::class, 'show'])->middleware('auth')->name('stocks.show');
 Route::resource('stocks', StockController::class);
+
+Route::get('/news', [NewsController::class, 'index'])->name('news')->middleware('auth');
+
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/account', [AccountController::class, 'edit'])->name('account'); // Account edit form
+    Route::put('/account', [AccountController::class, 'update'])->name('account.update'); // Account update action
+});
 
 Route::get('/', function () {
     return view('welcome');

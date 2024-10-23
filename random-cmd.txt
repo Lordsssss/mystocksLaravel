@@ -2,3 +2,5 @@ composer require laravel/ui "^3.0"
 php artisan ui vue --auth
 php artisan serve
 composer update --no-scripts
+php artisan route:clear
+php artisan route:list
