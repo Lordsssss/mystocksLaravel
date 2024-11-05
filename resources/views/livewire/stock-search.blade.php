@@ -1,5 +1,5 @@
 <div class="position-relative" wire:click.away="hideDropdown"> <!-- Detect clicks outside -->
-    <input type="text" class="form-control" placeholder="Search stocks..." wire:model="searchTerm"
+    <input type="text" class="form-control" placeholder="{{ __('messages.search_stocks') }}" wire:model="searchTerm"
         wire:focus="$set('showDropdown', true)">
     @if($showDropdown && !empty($stocks))
         <ul class="list-group position-absolute" style="z-index: 1000;">

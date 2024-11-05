@@ -13,6 +13,7 @@ use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Log;
 |
 */
 
+// Language Setting Route
 Route::get('/set-language/{lang}', function ($lang) {
     Session::put('locale', $lang);
     Session::save();
@@ -35,9 +37,6 @@ Route::get('/set-language/{lang}', function ($lang) {
     Log::info('Language set to: ' . $lang);
     Log::info('Session locale is now: ' . Session::get('locale'));
     Log::info('Application Locale set to: ' . App::getLocale());
-
-    // Optionally, return a response directly for testing
-    // return view('profile'); // Replace with your view
 
     // Redirect back
     return redirect()->back();
@@ -58,16 +57,20 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
-// Stock Routes
-Route::resource('stocks', StockController::class)->middleware('auth');
+// Apply 'auth' and 'setlocale' Middleware to Authenticated Routes
+Route::middleware(['auth', 'setlocale'])->group(function () {
+    // Stock Routes
+    Route::resource('stocks', StockController::class);
 
-// News Routes
-Route::get('/news', [NewsController::class, 'index'])->middleware('auth')->name('news');
+    // News Routes
+    Route::get('/news', [NewsController::class, 'index'])->name('news');
 
-// Account Routes
-Route::middleware('auth')->group(function () {
+    // Account Routes
     Route::get('/account', [AccountController::class, 'edit'])->name('account'); // Account edit form
     Route::put('/account', [AccountController::class, 'update'])->name('account.update'); // Account update action
+
+    // Home Route (after login)
+    Route::get('/home', [HomeController::class, 'index'])->middleware('verified')->name('home');
 });
 
 // Homepage Route
@@ -77,6 +80,3 @@ Route::get('/', function () {
 
 // Authentication Routes
 Auth::routes(['verify' => true]);
-
-// Home Route (after login)
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
