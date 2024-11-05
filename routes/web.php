@@ -6,10 +6,13 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\NewsController;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AccountController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +24,24 @@ use App\Http\Controllers\AccountController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/set-language/{lang}', function ($lang) {
+    Session::put('locale', $lang);
+    Session::save();
+
+    App::setLocale($lang);
+
+    // Log for debugging
+    Log::info('Language set to: ' . $lang);
+    Log::info('Session locale is now: ' . Session::get('locale'));
+    Log::info('Application Locale set to: ' . App::getLocale());
+
+    // Optionally, return a response directly for testing
+    // return view('profile'); // Replace with your view
+
+    // Redirect back
+    return redirect()->back();
+})->name('set-language');
 
 // Authentication Routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -37,17 +58,11 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
-// Email Verification Routes
-Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
-Route::post('email/verification-notification', [VerificationController::class, 'resend'])->name('verification.resend');
-Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-
 // Stock Routes
-Route::get('/stocks/{id}', [StockController::class, 'show'])->middleware('auth')->name('stocks.show');
-Route::resource('stocks', StockController::class);
+Route::resource('stocks', StockController::class)->middleware('auth');
 
 // News Routes
-Route::get('/news', [NewsController::class, 'index'])->name('news')->middleware('auth');
+Route::get('/news', [NewsController::class, 'index'])->middleware('auth')->name('news');
 
 // Account Routes
 Route::middleware('auth')->group(function () {

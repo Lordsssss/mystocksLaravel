@@ -19,6 +19,7 @@ class AccountController extends Controller
             'name' => 'required|string|max:255',
             'password' => 'nullable|string|min:8|confirmed',
             'profile_image' => 'nullable|url|max:255', // Validate the URL
+            'language' => 'required|string|in:en,fr,es', // Validate language (en, fr, es)
         ]);
 
         $user = auth()->user();
@@ -34,9 +35,11 @@ class AccountController extends Controller
             $user->profile_image = $request->profile_image; // Save the image URL in the database
         }
 
+        // Update user language preference
+        $user->language = $request->language;
+
         $user->save(); // Save the updated user information
 
         return redirect()->route('account')->with('success', 'Profile updated successfully.');
     }
 }
-

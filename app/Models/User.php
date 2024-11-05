@@ -43,15 +43,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    /**
      * Check if the user is an admin.
      *
      * @return bool

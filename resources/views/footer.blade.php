@@ -3,25 +3,24 @@
         <div class="row">
             <!-- About Section -->
             <div class="col-md-4">
-                <h5>About Us</h5>
+                <h5>{{ __('about_us') }}</h5>
                 <p>
-                    We provide the best stock analysis and updates. Stay connected to get the latest stock prices and
-                    insights.
+                    {{ __('We provide the best stock analysis and updates. Stay connected to get the latest stock prices and insights.') }}
                 </p>
             </div>
 
             <!-- Quick Links Section -->
             <div class="col-md-4">
-                <h5>Quick Links</h5>
+                <h5>{{ __('quick_links') }}</h5>
                 <ul class="list-unstyled">
-                    <li><a href="{{ route('home') }}" class="text-light">Home</a></li>
-                    <li><a href="{{ route('stocks.index') }}" class="text-light">Stocks</a></li>
+                    <li><a href="{{ route('home') }}" class="text-light">{{ __('home') }}</a></li>
+                    <li><a href="{{ route('stocks.index') }}" class="text-light">{{ __('stock') }}</a></li>
                 </ul>
             </div>
 
             <!-- Contact Info Section -->
             <div class="col-md-4">
-                <h5>Contact Us</h5>
+                <h5>{{ __('contact_info') }}</h5>
                 <ul class="list-unstyled">
                     <li><i class="bi bi-geo-alt"></i> 123 Market St, NY</li>
                     <li><i class="bi bi-envelope"></i> info@stocksite.com</li>
@@ -34,7 +33,7 @@
 
         <div class="row">
             <div class="col text-center">
-                <p>Hugo Montreuil
+                <p>{{ __('github_credit') }}
                     <a href="https://github.com/Lordsssss/mystocksLaravel" class="text-decoration-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-github" viewBox="0 0 16 16">
@@ -44,11 +43,11 @@
                     </a>
                 </p>
             </div>
-
         </div>
+
         <div class="row">
             <div class="col text-center">
-                <p>&copy; {{ date('Y') }} StockSite. All Rights Reserved.</p>
+                <p>&copy; {{ date('Y') }} StockSite. {{ __('all_rights_reserved') }}</p>
             </div>
         </div>
     </div>

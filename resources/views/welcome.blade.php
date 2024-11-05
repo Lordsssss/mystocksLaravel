@@ -4,21 +4,20 @@
 
 <div class="container m-3">
     <section>
-        <h2>Introduction</h2>
-        <p>Welcome to My Stocks App! This application helps you manage and track your stock investments with ease.
-        </p>
+        <h2>{{ __('messages.introduction') }}</h2>
+        <p>{{ __('messages.welcome_message') }}</p>
     </section>
     <section>
-        <h2>Features</h2>
+        <h2>{{ __('messages.features') }}</h2>
         <ul>
-            <li>Real-time stock price updates</li>
-            <li>Portfolio management</li>
-            <li>Modern and simple web platforme</li>
+            <li>{{ __('messages.real_time_updates') }}</li>
+            <li>{{ __('messages.portfolio_management') }}</li>
+            <li>{{ __('messages.modern_platform') }}</li>
         </ul>
     </section>
     <section>
-        <h2>Contact Us</h2>
-        <p>If you have any questions or feedback, feel free to <a href="/contact">contact us</a>.</p>
+        <h2>{{ __('messages.contact_us') }}</h2>
+        <p>{{ __('messages.contact_message') }}</p>
     </section>
 </div>
 @endsection
