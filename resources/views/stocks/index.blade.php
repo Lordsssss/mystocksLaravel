@@ -9,8 +9,8 @@
                     <th scope="col">{{ __('messages.symbol') }}</th>
                     <th scope="col">{{ __('messages.name') }}</th>
                     <th scope="col">{{ __('messages.price') }}</th>
-                    @if (auth()->check() && auth()->user()->isAdmin())
-                        <!-- Check if the user is logged in and is admin -->
+                    @if (auth()->check() && auth()->user()->role <= 1)
+                        <!-- Check if the user is logged in and is admin or moderator -->
                         <th scope="col">{{ __('messages.actions') }}</th> <!-- Added actions column -->
                     @endif
                 </tr>
@@ -25,7 +25,7 @@
                         </td>
                         <td>{{ $singleStock->stock_name }}</td>
                         <td>{{ $singleStock->current_price }}</td>
-                        @if (auth()->check() && auth()->user()->isAdmin())
+                        @if (auth()->check() && auth()->user()->role <= 1)
                             <td>
                                 <a href="#" class="btn btn-primary btn-sm">
                                     {{ __('messages.edit') }}

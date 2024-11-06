@@ -1,29 +1,26 @@
 <?php
 
-use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\NewsController;
-use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\AccountController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController; // Add this if you have an AdminController
+use App\Http\Controllers\ModeratorController; // Add this if you have a ModeratorController
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 // Language Setting Route
@@ -32,11 +29,6 @@ Route::get('/set-language/{lang}', function ($lang) {
     Session::save();
 
     App::setLocale($lang);
-
-    // Log for debugging
-    Log::info('Language set to: ' . $lang);
-    Log::info('Session locale is now: ' . Session::get('locale'));
-    Log::info('Application Locale set to: ' . App::getLocale());
 
     // Redirect back
     return redirect()->back();
@@ -57,20 +49,31 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
-// Apply 'auth' and 'setlocale' Middleware to Authenticated Routes
+// Apply 'auth', 'verified', and 'setlocale' Middleware to Authenticated Routes
 Route::middleware(['auth', 'setlocale'])->group(function () {
-    // Stock Routes
-    Route::resource('stocks', StockController::class);
+    // Admin Routes (Only accessible by admin)
+    Route::middleware('role:0')->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::post('/admin/upgrade/{user_id}', [AdminController::class, 'upgradeToModerator'])->name('admin.upgrade');
+        Route::post('/admin/demote/{user_id}', [AdminController::class, 'demoteToUser'])->name('admin.demote'); // Demote route
+    });
 
-    // News Routes
+    // Moderator Routes (Accessible by admin and moderator)
+    Route::middleware('role:1')->group(function () {
+        Route::get('/moderator', [ModeratorController::class, 'index'])->name('moderator.dashboard');
+        // Add other moderator routes here
+    });
+
+    // Routes accessible by all authenticated users
+    Route::resource('stocks', StockController::class);
     Route::get('/news', [NewsController::class, 'index'])->name('news');
 
     // Account Routes
-    Route::get('/account', [AccountController::class, 'edit'])->name('account'); // Account edit form
-    Route::put('/account', [AccountController::class, 'update'])->name('account.update'); // Account update action
+    Route::get('/account', [AccountController::class, 'edit'])->name('account');
+    Route::put('/account', [AccountController::class, 'update'])->name('account.update');
 
-    // Home Route (after login)
-    Route::get('/home', [HomeController::class, 'index'])->middleware('verified')->name('home');
+    // Home Route
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 
 // Homepage Route

@@ -51,7 +51,7 @@ return [
         'features' => [
             'custom_primary_keys' => 'Claves primarias personalizadas',
             'custom_primary_keys_description' => 'Usa `stock_id` y `price_id` en lugar del `id` predeterminado para una identificación personalizada en las tablas de stock y precios.',
-            
+
             'login_system' => 'Sistema de inicio de sesión personalizado',
             'login_system_description' => 'Implementa un sistema de inicio de sesión personalizado con plantillas de Bootstrap, mejorando la experiencia del usuario y asegurando una autenticación fluida.',
 
@@ -59,12 +59,12 @@ return [
                 'description' => 'Gestión del perfil de usuario',
                 'profile_picture' => 'Permite a los usuarios modificar sus perfiles, incluyendo actualizaciones de fotos de perfil a través de URL, mientras restringe cambios en el correo electrónico por razones de seguridad.'
             ],
-            
+
             'language_switching' => [
                 'description' => 'Cambio de idioma',
                 'persistence' => 'Admite la selección de idioma persistente entre sesiones, guardada directamente en la base de datos para una experiencia coherente.'
             ],
-            
+
             'stock_operations' => [
                 'tracking' => 'Seguimiento de stock y precios',
                 'transaction_history' => 'Registra cada transacción de stock, proporcionando a los usuarios un registro claro de los movimientos de stock y cambios de precios.'
@@ -76,4 +76,18 @@ return [
             ]
         ],
     ],
+    'admin_dashboard' => 'Panel de Control de Admin',
+    'user_id' => 'ID de Usuario',
+    'email' => 'Correo Electrónico',
+    'account_number' => 'Número de Cuenta',
+    'role' => 'Rol',
+    'admin' => 'Admin',
+    'moderator' => 'Moderador',
+    'normal_user' => 'Usuario Normal',
+    'not_available' => 'N/A',
+    'upgrade_to_moderator' => 'Ascender a Moderador',
+    'already_elevated' => 'Ya Elevado',
+    'demote_to_user' => 'Degradar a Usuario',
+    'demoted_successfully' => 'Usuario degradado con éxito.',
+    'not_moderator' => 'El usuario no es moderador.',
 ];
