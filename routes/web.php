@@ -57,7 +57,9 @@ Route::middleware(['auth', 'setlocale'])->group(function () {
         Route::post('/admin/upgrade/{user_id}', [AdminController::class, 'upgradeToModerator'])->name('admin.upgrade');
         Route::post('/admin/demote/{user_id}', [AdminController::class, 'demoteToUser'])->name('admin.demote'); // Demote route
     });
-
+    Route::middleware(['auth'])->get('/buy-stock', function () {
+        return view('buy_stock'); // This assumes your Blade file is named `buy_stock.blade.php`
+    })->name('buy-stock');
     // Moderator Routes (Accessible by admin and moderator)
     Route::middleware('role:1')->group(function () {
         Route::get('/moderator', [ModeratorController::class, 'index'])->name('moderator.dashboard');

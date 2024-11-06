@@ -36,6 +36,9 @@
                         </svg> {{ __('messages.news') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('buy-stock') }}">Buy Stock</a>
+                </li>
                 @if(auth()->user()->isAdmin())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.dashboard') }}"><svg xmlns="http://www.w3.org/2000/svg"

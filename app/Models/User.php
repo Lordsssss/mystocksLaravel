@@ -15,7 +15,7 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'account_number';
 
     /**
      * The attributes that are mass assignable.
@@ -69,5 +69,10 @@ class User extends Authenticatable
     public function isNormalUser()
     {
         return $this->role === 2;
+    }
+
+    public function portfolio()
+    {
+        return $this->hasMany(Portfolio::class, 'account_number', 'account_number');
     }
 }

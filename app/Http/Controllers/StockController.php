@@ -40,7 +40,7 @@ class StockController extends Controller
         $priceHistory = StockPrices::where('stock_symbol', $stock->stock_symbol)
             ->orderBy('price_date', 'asc')
             ->get();
-    
+
         return view('stocks.show', compact('stock', 'priceHistory')); // Pass both stock and price history data to the view
     }
 
@@ -73,5 +73,14 @@ class StockController extends Controller
         return redirect()->route('stocks.index')->with('success', 'Stock deleted successfully.'); // Redirect with success message
     }
 
-    
+    public function searchStocks(Request $request)
+    {
+        $query = $request->input('query');
+
+        $stock = Stock::where('stock_name', 'like', "%{$query}%")
+            ->orWhere('stock_symbol', 'like', "%{$query}%")
+            ->get(['stock_id', 'stock_name', 'stock_symbol', 'current_price']);
+
+        return response()->json($stock);
+    }
 }
