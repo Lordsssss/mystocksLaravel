@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model
-{   
-    protected $table = 'stock';
+{
     use HasFactory;
 
+    protected $table = 'stock';
     /**
      * The primary key associated with the table.
      *

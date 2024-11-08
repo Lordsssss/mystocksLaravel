@@ -51,7 +51,7 @@ return [
         'features' => [
             'custom_primary_keys' => 'Clés primaires personnalisées',
             'custom_primary_keys_description' => 'Utilise `stock_id` et `price_id` au lieu de `id` par défaut pour une identification personnalisée dans les tables de stock et de prix.',
-            
+
             'login_system' => 'Système de connexion personnalisé',
             'login_system_description' => 'Implémente un système de connexion personnalisé avec des modèles Bootstrap, améliorant l\'expérience utilisateur et assurant une authentification fluide.',
 
@@ -59,12 +59,12 @@ return [
                 'description' => 'Gestion du profil utilisateur',
                 'profile_picture' => 'Permet aux utilisateurs de modifier leur profil, y compris la mise à jour de l\'image de profil via une URL, tout en restreignant les modifications d\'email pour des raisons de sécurité.'
             ],
-            
+
             'language_switching' => [
                 'description' => 'Changement de langue',
                 'persistence' => 'Prend en charge la sélection de langue persistante entre les sessions, enregistrée directement dans la base de données pour une expérience cohérente.'
             ],
-            
+
             'stock_operations' => [
                 'tracking' => 'Suivi des stocks et des prix',
                 'transaction_history' => 'Enregistre chaque transaction de stock, offrant aux utilisateurs un historique clair des mouvements de stock et des changements de prix.'
@@ -76,4 +76,18 @@ return [
             ]
         ],
     ],
+    'admin_dashboard' => 'Tableau de Bord Admin',
+    'user_id' => 'ID Utilisateur',
+    'email' => 'Email',
+    'account_number' => 'Numéro de Compte',
+    'role' => 'Rôle',
+    'admin' => 'Admin',
+    'moderator' => 'Modérateur',
+    'normal_user' => 'Utilisateur Normal',
+    'not_available' => 'N/A',
+    'upgrade_to_moderator' => 'Passer à Modérateur',
+    'already_elevated' => 'Déjà Élevé',
+    'demoted_successfully' => 'Utilisateur rétrogradé avec succès.',
+    'not_moderator' => "L'utilisateur n'est pas un modérateur.",
+    'demote_to_user' => 'Rétrograder à Utilisateur',
 ];

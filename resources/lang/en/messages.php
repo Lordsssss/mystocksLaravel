@@ -51,7 +51,7 @@ return [
         'features' => [
             'custom_primary_keys' => 'Custom Primary Keys',
             'custom_primary_keys_description' => 'Uses `stock_id` and `price_id` instead of the default `id` for custom identification in stock and price tables.',
-            
+
             'login_system' => 'Custom Login System',
             'login_system_description' => 'Implements a customized login system with Bootstrap templates, enhancing the user experience and ensuring seamless authentication.',
 
@@ -59,12 +59,12 @@ return [
                 'description' => 'User Profile Management',
                 'profile_picture' => 'Allows users to modify their profiles, including profile picture updates via URL, while restricting email changes for security purposes.'
             ],
-            
+
             'language_switching' => [
                 'description' => 'Language Switching',
                 'persistence' => 'Supports persistent language selection across sessions, saved directly in the database for consistent experience.'
             ],
-            
+
             'stock_operations' => [
                 'tracking' => 'Stock and Price Tracking',
                 'transaction_history' => 'Logs each stock transaction, providing users with a clear record of stock movements and pricing changes.'
@@ -76,4 +76,18 @@ return [
             ]
         ],
     ],
+    'admin_dashboard' => 'Admin Dashboard',
+    'user_id' => 'User ID',
+    'email' => 'Email',
+    'account_number' => 'Account Number',
+    'role' => 'Role',
+    'admin' => 'Admin',
+    'moderator' => 'Moderator',
+    'normal_user' => 'Normal User',
+    'not_available' => 'N/A',
+    'upgrade_to_moderator' => 'Upgrade to Moderator',
+    'already_elevated' => 'Already Elevated',
+    'demoted_successfully' => 'User demoted successfully.',
+    'not_moderator' => 'User is not a moderator.',
+    'demote_to_user' => 'Demote to User',
 ];

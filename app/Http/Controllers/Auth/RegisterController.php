@@ -56,18 +56,38 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
     protected function create(array $data)
     {
+        // Get the last user's account number and increment it
+        $lastAccountNumber = User::max('account_number');
+
+        // Generate the next account number
+        $newAccountNumber = $this->generateNextAccountNumber($lastAccountNumber);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'account_number' => $newAccountNumber,
+            'role' => 2, // Default to normal user
         ]);
+    }
+    /**
+     * Generate the next account number based on the last one.
+     *
+     * @param string|null $lastAccountNumber
+     * @return string
+     */
+    protected function generateNextAccountNumber($lastAccountNumber)
+    {
+        if (!$lastAccountNumber) {
+            return 'ACC0001'; // Start from ACC0001 if no users exist
+        }
+
+        // Extract the numeric part and increment it
+        $numericPart = (int) substr($lastAccountNumber, 3);
+        $newNumericPart = str_pad($numericPart + 1, 4, '0', STR_PAD_LEFT);
+
+        return 'ACC' . $newNumericPart;
     }
 }
