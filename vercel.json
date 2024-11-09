@@ -13,7 +13,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://your.url.from.vercel.app",
+        "APP_URL": "https://mystocks-laravel-git-master-lordsssss-projects.vercel.app",
         "APP_KEY": "base64:bbAHQnoZGC6Mxqap6pP3Shmih9yuQ4XlXRW9ma9nJEQ=",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
