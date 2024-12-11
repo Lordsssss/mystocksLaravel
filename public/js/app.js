@@ -7618,7 +7618,6 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -7718,7 +7717,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
- // Import AsyncSelect
+
 
 
 function BuyStock() {
@@ -7728,83 +7727,130 @@ function BuyStock() {
     setOwnedStocks = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    showModal = _useState4[0],
-    setShowModal = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    auth = _useState4[0],
+    setAuth = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
-    quantity = _useState6[0],
-    setQuantity = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    showModal = _useState6[0],
+    setShowModal = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState8 = _slicedToArray(_useState7, 2),
-    selectedStock = _useState8[0],
-    setSelectedStock = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    quantity = _useState8[0],
+    setQuantity = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState10 = _slicedToArray(_useState9, 2),
-    message = _useState10[0],
-    setMessage = _useState10[1];
+    selectedStock = _useState10[0],
+    setSelectedStock = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState12 = _slicedToArray(_useState11, 2),
+    message = _useState12[0],
+    setMessage = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState14 = _slicedToArray(_useState13, 2),
+    imageURL = _useState14[0],
+    setImageURL = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState16 = _slicedToArray(_useState15, 2),
+    showLogin = _useState16[0],
+    setShowLogin = _useState16[1];
 
-  // Fetch owned stocks when the component mounts
+  // Check authentication and fetch owned stocks
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    fetchOwnedStocks();
-  }, []);
-
-  // Function to fetch owned stocks from the backend
-  var fetchOwnedStocks = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var response;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
-            _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/owned-stocks', {
-              headers: {
-                'Authorization': "Bearer ".concat(localStorage.getItem('token'))
+    var checkAuthentication = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/user', {
+                headers: {
+                  Authorization: "Bearer ".concat(localStorage.getItem('token'))
+                }
+              });
+            case 3:
+              response = _context.sent;
+              if (response.status === 200) {
+                setAuth(true);
+                setShowLogin(false);
+                fetchOwnedStocks();
               }
-            });
-          case 3:
-            response = _context.sent;
-            setOwnedStocks(response.data);
-            _context.next = 10;
-            break;
-          case 7:
-            _context.prev = 7;
-            _context.t0 = _context["catch"](0);
-            console.error('Failed to fetch owned stocks:', _context.t0);
-          case 10:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee, null, [[0, 7]]);
-    }));
-    return function fetchOwnedStocks() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  // Function to load options for AsyncSelect
-  var loadOptions = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(inputValue) {
+              _context.next = 12;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error('Authentication failed:', _context.t0);
+              setAuth(false);
+              setShowLogin(true);
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }));
+      return function checkAuthentication() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+    checkAuthentication();
+  }, []);
+  var fetchOwnedStocks = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
       var response;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/owned-stocks', {
+              headers: {
+                Authorization: "Bearer ".concat(localStorage.getItem('token'))
+              }
+            });
+          case 3:
+            response = _context2.sent;
+            setOwnedStocks(response.data);
+            _context2.next = 11;
+            break;
+          case 7:
+            _context2.prev = 7;
+            _context2.t0 = _context2["catch"](0);
+            console.error('Failed to fetch owned stocks:', _context2.t0);
+            setMessage('Failed to fetch owned stocks.');
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 7]]);
+    }));
+    return function fetchOwnedStocks() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  var loadOptions = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(inputValue) {
+      var response;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
             if (!(inputValue.length < 3)) {
-              _context2.next = 2;
+              _context3.next = 2;
               break;
             }
-            return _context2.abrupt("return", []);
+            return _context3.abrupt("return", []);
           case 2:
-            _context2.prev = 2;
-            _context2.next = 5;
+            _context3.prev = 2;
+            _context3.next = 5;
             return axios__WEBPACK_IMPORTED_MODULE_2___default().get("/api/search-stocks?query=".concat(inputValue), {
               headers: {
-                'Authorization': "Bearer ".concat(localStorage.getItem('token'))
+                Authorization: "Bearer ".concat(localStorage.getItem('token'))
               }
             });
           case 5:
-            response = _context2.sent;
-            return _context2.abrupt("return", response.data.map(function (stock) {
+            response = _context3.sent;
+            return _context3.abrupt("return", response.data.map(function (stock) {
               return {
                 value: stock.id,
                 label: "".concat(stock.stock_name, " (").concat(stock.stock_symbol, ") - $").concat(stock.current_price),
@@ -7812,187 +7858,361 @@ function BuyStock() {
               };
             }));
           case 9:
-            _context2.prev = 9;
-            _context2.t0 = _context2["catch"](2);
-            console.error('Failed to fetch search results:', _context2.t0);
-            return _context2.abrupt("return", []);
+            _context3.prev = 9;
+            _context3.t0 = _context3["catch"](2);
+            console.error('Failed to fetch search results:', _context3.t0);
+            return _context3.abrupt("return", []);
           case 13:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
-      }, _callee2, null, [[2, 9]]);
+      }, _callee3, null, [[2, 9]]);
     }));
     return function loadOptions(_x) {
-      return _ref2.apply(this, arguments);
+      return _ref3.apply(this, arguments);
     };
   }();
-
-  // Handle selecting a stock
   var handleSelectStock = function handleSelectStock(option) {
     setSelectedStock(option ? option.stock : null);
   };
-
-  // Handle the buy stock form submission
   var handleBuyStock = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
+    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
       var response;
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
           case 0:
             e.preventDefault();
-            _context3.prev = 1;
-            _context3.next = 4;
+            if (selectedStock) {
+              _context4.next = 4;
+              break;
+            }
+            setMessage('Please select a stock to purchase.');
+            return _context4.abrupt("return");
+          case 4:
+            _context4.prev = 4;
+            _context4.next = 7;
             return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/buy-stock', {
               stock_id: selectedStock.stock_id,
               quantity: quantity
             }, {
               headers: {
-                'Authorization': "Bearer ".concat(localStorage.getItem('token'))
+                Authorization: "Bearer ".concat(localStorage.getItem('token'))
               }
             });
-          case 4:
-            response = _context3.sent;
+          case 7:
+            response = _context4.sent;
             setMessage(response.data.message);
-            fetchOwnedStocks(); // Refresh the owned stocks list
-            setShowModal(false); // Close the modal
-            setSelectedStock(null); // Reset selection
-            setQuantity(1); // Reset quantity
-            _context3.next = 16;
+            fetchOwnedStocks();
+            setShowModal(false);
+            setSelectedStock(null);
+            setQuantity(1);
+            _context4.next = 19;
             break;
-          case 12:
-            _context3.prev = 12;
-            _context3.t0 = _context3["catch"](1);
-            console.log(_context3.t0);
+          case 15:
+            _context4.prev = 15;
+            _context4.t0 = _context4["catch"](4);
+            console.error('Failed to purchase stock:', _context4.t0);
             setMessage('Failed to purchase stock. Please try again.');
-          case 16:
+          case 19:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
-      }, _callee3, null, [[1, 12]]);
+      }, _callee4, null, [[4, 15]]);
     }));
     return function handleBuyStock(_x2) {
-      return _ref3.apply(this, arguments);
+      return _ref4.apply(this, arguments);
     };
   }();
-
-  // Calculate total price
+  var handleUpdateImageUrl = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5(stockId, newImageUrl) {
+      var response;
+      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _context5.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/update-stock-image-url', {
+              stock_id: stockId,
+              image_url: newImageUrl
+            }, {
+              headers: {
+                Authorization: "Bearer ".concat(localStorage.getItem('token'))
+              }
+            });
+          case 3:
+            response = _context5.sent;
+            setMessage(response.data.message);
+            fetchOwnedStocks();
+            _context5.next = 12;
+            break;
+          case 8:
+            _context5.prev = 8;
+            _context5.t0 = _context5["catch"](0);
+            console.error('Failed to update stock image URL:', _context5.t0);
+            setMessage('Failed to update stock image URL. Please try again.');
+          case 12:
+          case "end":
+            return _context5.stop();
+        }
+      }, _callee5, null, [[0, 8]]);
+    }));
+    return function handleUpdateImageUrl(_x3, _x4) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+  var handleSellStock = /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6(stockId, quantityToSell) {
+      var response;
+      return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+        while (1) switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            _context6.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/sell-stock', {
+              stock_id: stockId,
+              quantity: quantityToSell
+            }, {
+              headers: {
+                Authorization: "Bearer ".concat(localStorage.getItem('token'))
+              }
+            });
+          case 3:
+            response = _context6.sent;
+            setMessage(response.data.message);
+            fetchOwnedStocks();
+            _context6.next = 12;
+            break;
+          case 8:
+            _context6.prev = 8;
+            _context6.t0 = _context6["catch"](0);
+            console.error('Failed to sell stock:', _context6.t0);
+            setMessage('Failed to sell stock. Please try again.');
+          case 12:
+          case "end":
+            return _context6.stop();
+        }
+      }, _callee6, null, [[0, 8]]);
+    }));
+    return function handleSellStock(_x5, _x6) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+  var handleLogin = /*#__PURE__*/function () {
+    var _ref7 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7(e) {
+      var _e$target$elements, email, password, response;
+      return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+        while (1) switch (_context7.prev = _context7.next) {
+          case 0:
+            e.preventDefault();
+            _e$target$elements = e.target.elements, email = _e$target$elements.email, password = _e$target$elements.password;
+            _context7.prev = 2;
+            _context7.next = 5;
+            return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/login', {
+              email: email.value,
+              password: password.value
+            });
+          case 5:
+            response = _context7.sent;
+            localStorage.setItem('token', response.data.token);
+            setAuth(true);
+            setShowLogin(false);
+            fetchOwnedStocks();
+            setMessage('Login successful!');
+            _context7.next = 17;
+            break;
+          case 13:
+            _context7.prev = 13;
+            _context7.t0 = _context7["catch"](2);
+            console.error('Login failed:', _context7.t0);
+            setMessage('Failed to log in. Please check your credentials.');
+          case 17:
+          case "end":
+            return _context7.stop();
+        }
+      }, _callee7, null, [[2, 13]]);
+    }));
+    return function handleLogin(_x7) {
+      return _ref7.apply(this, arguments);
+    };
+  }();
   var totalPrice = selectedStock ? selectedStock.current_price * quantity : 0;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     className: "container mt-4",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
-      className: "text-center mb-4",
-      children: "My Portfolio"
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("header", {
+      className: "mb-4",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h2", {
+        children: "Stock Portfolio Management"
+      }), auth && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        className: "btn btn-secondary",
+        onClick: function onClick() {
+          localStorage.removeItem('token');
+          setAuth(false);
+          setOwnedStocks([]);
+          setShowLogin(true);
+          setMessage('Logged out successfully.');
+        },
+        children: "Logout"
+      })]
     }), message && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "alert alert-info",
       children: message
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-      className: "mb-4",
+    }), showLogin ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      className: "login-form",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
-        children: "Currently Owned Stocks"
+        children: "Login"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+        onSubmit: handleLogin,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+          type: "email",
+          name: "email",
+          placeholder: "Email",
+          className: "form-control mb-3",
+          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+          type: "password",
+          name: "password",
+          placeholder: "Password",
+          className: "form-control mb-3",
+          required: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+          type: "submit",
+          className: "btn btn-primary",
+          children: "Login"
+        })]
+      })]
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h4", {
+        children: "Owned Stocks"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("ul", {
-        className: "list-group",
-        children: ownedStocks.length > 0 ? ownedStocks.map(function (stock) {
+        className: "list-group mb-4",
+        children: ownedStocks.map(function (stock) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("li", {
             className: "list-group-item d-flex justify-content-between align-items-center",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
-              children: ["Symbol: ", stock.stock_symbol]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
-              children: ["Name: ", stock.stock_name]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
-              children: ["Quantity: ", stock.quantity]
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+                src: stock.image_url ? stock.image_url : 'https://via.placeholder.com/50',
+                alt: stock.stock_name || 'Stock Image',
+                style: {
+                  width: 50,
+                  height: 50,
+                  marginRight: 10
+                },
+                onError: function onError(e) {
+                  e.target.onerror = null; // Prevent infinite loop
+                  e.target.src = 'https://via.placeholder.com/50';
+                }
+              }), stock.stock_name, " (", stock.stock_symbol, ") - Qty: ", stock.quantity]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                type: "text",
+                placeholder: "Update Image URL",
+                className: "form-control mb-2",
+                onChange: function onChange(e) {
+                  return setImageURL(e.target.value);
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                className: "btn btn-primary mb-2",
+                onClick: function onClick() {
+                  return handleUpdateImageUrl(stock.stock_id, imageURL);
+                },
+                children: "Update Image"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                className: "btn btn-danger",
+                onClick: function onClick() {
+                  return handleSellStock(stock.stock_id, 1);
+                },
+                children: "Sell 1"
+              })]
             })]
           }, stock.id);
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: "list-group-item",
-          children: "You don't own any stocks yet."
         })
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-      className: "btn btn-primary",
-      onClick: function onClick() {
-        return setShowModal(true);
-      },
-      children: "Buy Stock"
-    }), showModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-      className: "modal fade show d-block",
-      style: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
-      },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "modal-dialog",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "modal-content",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "modal-header",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
-              className: "modal-title",
-              children: "Buy Stock"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-              type: "button",
-              className: "close",
-              onClick: function onClick() {
-                return setShowModal(false);
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                children: "\xD7"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        className: "btn btn-primary mt-3",
+        onClick: function onClick() {
+          return setShowModal(true);
+        },
+        children: "Buy Stock"
+      }), showModal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "modal fade show d-block",
+        style: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "modal-dialog",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "modal-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "modal-header",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+                className: "modal-title",
+                children: "Buy Stock"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                className: "close",
+                onClick: function onClick() {
+                  return setShowModal(false);
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+                  children: "\xD7"
+                })
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "modal-body",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+                onSubmit: handleBuyStock,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "form-group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: "Search Stock"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_select_async__WEBPACK_IMPORTED_MODULE_1__["default"], {
+                    cacheOptions: true,
+                    loadOptions: loadOptions,
+                    onChange: handleSelectStock,
+                    placeholder: "Type stock name or symbol",
+                    isClearable: true
+                  })]
+                }), selectedStock && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "mb-3",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                      children: "Stock:"
+                    }), " ", selectedStock.stock_name, " (", selectedStock.stock_symbol, ")"]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                      children: "Price:"
+                    }), " $", selectedStock.current_price]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "form-group",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    children: "Quantity"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "number",
+                    className: "form-control",
+                    value: quantity,
+                    onChange: function onChange(e) {
+                      return setQuantity(e.target.value);
+                    },
+                    min: "1",
+                    required: true
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  className: "mb-3",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
+                      children: "Total Price:"
+                    }), " $", totalPrice]
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                  type: "submit",
+                  className: "btn btn-primary",
+                  children: "Confirm Purchase"
+                })]
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "modal-body",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
-              onSubmit: handleBuyStock,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "form-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                  children: "Search Stock"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_select_async__WEBPACK_IMPORTED_MODULE_1__["default"], {
-                  cacheOptions: true,
-                  loadOptions: loadOptions,
-                  onChange: handleSelectStock,
-                  placeholder: "Type stock name or symbol",
-                  isClearable: true
-                })]
-              }), selectedStock && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "mb-3",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
-                    children: "Stock:"
-                  }), " ", selectedStock.stock_name, " (", selectedStock.stock_symbol, ")"]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
-                    children: "Price:"
-                  }), " $", selectedStock.current_price]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-                className: "form-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                  children: "Quantity"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                  type: "number",
-                  className: "form-control",
-                  value: quantity,
-                  onChange: function onChange(e) {
-                    return setQuantity(e.target.value);
-                  },
-                  min: "1",
-                  required: true
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "mb-3",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("strong", {
-                    children: "Total Price:"
-                  }), " $", totalPrice]
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                type: "submit",
-                className: "btn btn-primary",
-                children: "Confirm Purchase"
-              })]
-            })
-          })]
+          })
         })
-      })
+      })]
     })]
   });
 }

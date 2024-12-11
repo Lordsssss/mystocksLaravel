@@ -15,7 +15,6 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController; // Add this if you have an AdminController
-use App\Http\Controllers\ModeratorController; // Add this if you have a ModeratorController
 
 /*
 |--------------------------------------------------------------------------

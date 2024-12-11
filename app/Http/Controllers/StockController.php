@@ -21,16 +21,18 @@ class StockController extends Controller
 
     public function store(Request $request)
     {
-        // Validate incoming request
         $request->validate([
-            'stock_symbol' => 'required|max:10', // You can customize the validation rules
+            'stock_symbol' => 'required|max:10',
             'stock_name' => 'required|string|max:255',
             'current_price' => 'required|numeric',
         ]);
 
-        Stock::create($request->all()); // Create a new stock record
+        $stock = Stock::create($request->all());
 
-        return redirect()->route('stocks.index')->with('success', 'Stock added successfully.'); // Redirect with success message
+        return response()->json([
+            'message' => 'Stock added successfully.',
+            'stock' => $stock,
+        ], 201); // Return a JSON response with status 201 (Created)
     }
 
     public function show($id)
@@ -52,25 +54,27 @@ class StockController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validate incoming request
         $request->validate([
             'stock_symbol' => 'required|max:10',
             'stock_name' => 'required|string|max:255',
             'current_price' => 'required|numeric',
         ]);
 
-        $stock = Stock::findOrFail($id); // Fetch stock by ID
-        $stock->update($request->all()); // Update stock record
+        $stock = Stock::findOrFail($id);
+        $stock->update($request->all());
 
-        return redirect()->route('stocks.index')->with('success', 'Stock updated successfully.'); // Redirect with success message
+        return response()->json([
+            'message' => 'Stock updated successfully.',
+            'stock' => $stock,
+        ]);
     }
 
     public function destroy($id)
     {
-        $stock = Stock::findOrFail($id); // Fetch stock by ID
-        $stock->delete(); // Delete stock record
+        $stock = Stock::findOrFail($id);
+        $stock->delete();
 
-        return redirect()->route('stocks.index')->with('success', 'Stock deleted successfully.'); // Redirect with success message
+        return response()->json(['message' => 'Stock deleted successfully.']);
     }
 
     public function searchStocks(Request $request)

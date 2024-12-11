@@ -10,7 +10,7 @@ class Portfolio extends Model
     use HasFactory;
 
     protected $table = 'portfolio';
-    protected $fillable = ['account_number', 'stock_id', 'quantity'];
+    protected $fillable = ['account_number', 'stock_id', 'quantity', 'image_url'];
 
     public function user()
     {
